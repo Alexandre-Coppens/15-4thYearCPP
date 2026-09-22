@@ -14,7 +14,7 @@ int main()
     //SetTargetFPS(60);
 
 	srand(time(NULL));
-    boidList.Start(100, 5.0f, 50.0f);
+    boidList.Start(1000);
     while (!WindowShouldClose()){
         boidList.Update();
         BeginDrawing();
