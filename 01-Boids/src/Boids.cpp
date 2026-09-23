@@ -9,10 +9,12 @@ Boids::Boids() :
 	speed(50.0f),
 	dodgeCollisionSize(30.0f),
 	visionCollisionSize(100.0f),
+	attackCollisionSize(7.0f),
 	visionCone(0.3f),
 	dodgeImportance(1.5f),
 	alignImportance(2.0f),
 	cohesionImportance(1.5f),
+	chaseImportance(3.0f),
 	gridSize(50)
 {
 	//Please do not look at this
@@ -29,6 +31,7 @@ void Boids::Start(int _spawnNumber)
 	{
 		position.push_back(Vector2{ static_cast<float>(GetRandomValue(0, WindowWidth - 1)), static_cast<float>(GetRandomValue(0, WindowHeight - 1)) });
 		velocity.push_back(Vector2Normalize( Vector2{ static_cast<float>(GetRandomValue(-100, 100) * 0.01f), static_cast<float>(GetRandomValue(-100, 100) * 0.01f) }));
+		boidType.push_back(static_cast<BoidType>(GetRandomValue(1, 3)));
 		_gridIndices[floor(position[i].x / (WindowWidth / gridSize))][floor(position[i].y / (WindowHeight / gridSize))].push_back(i);
 	}
 }
@@ -47,10 +50,14 @@ void Boids::Update()
 		Vector2 dodgeDirection = GetDodgeDirection(i, neighbors);
 		Vector2 alignDirection = GetAlignDirection(i, neighbors);
 		Vector2 cohesionDirection = GetCohesionDirection(i, neighbors);
+		Vector2 chaseDirection = ChaseOtherBoids(i, neighbors);
 
-		Vector2 addedDirections = Vector2Add(Vector2Scale(dodgeDirection, dodgeImportance * GetFrameTime()),
-											 Vector2Add(Vector2Scale(alignDirection, alignImportance * GetFrameTime()),
-														Vector2Scale(cohesionDirection, cohesionImportance * GetFrameTime())));
+		KillOtherBoids(i, neighbors);
+
+		Vector2 addedDirections = Vector2Scale(dodgeDirection, dodgeImportance * GetFrameTime());
+		addedDirections = Vector2Add(addedDirections, Vector2Scale(alignDirection,		alignImportance *	 GetFrameTime()));
+		addedDirections = Vector2Add(addedDirections, Vector2Scale(cohesionDirection,	cohesionImportance * GetFrameTime())); 
+		addedDirections = Vector2Add(addedDirections, Vector2Scale(chaseDirection,		chaseImportance *	 GetFrameTime()));
 
 		velocity[i] = Vector2Add(velocity[i], addedDirections);
 		velocity[i] = Vector2Normalize(velocity[i]);
@@ -76,8 +83,26 @@ void Boids::Draw()
 {
 	for (int i = 0; i < position.size(); i++)
 	{
-		//DrawCircleV(position[i], collisionSize, Color{102, 242, 198, 100});
-		DrawCircleV(position[i], size,			Color{5, 70, 40, 255});
+		DrawCircleV(position[i], attackCollisionSize, Color{102, 242, 198, 100});
+		switch (boidType[i])
+		{
+		case Fire:
+			DrawCircleV(position[i], size, RED);
+			break;
+
+		case Water:
+			DrawCircleV(position[i], size, BLUE);
+			break;
+
+		case Grass:
+			DrawCircleV(position[i], size, GREEN);
+			break;
+
+		default:
+			DrawCircleV(position[i], size, Color{ 5, 70, 40, 255 });
+			break;
+		}
+		
 		//DrawLineV(position[i], Vector2Add(position[i], Vector2Scale(velocity[i], 20.0f)), RED);
 	}
 }
@@ -135,6 +160,15 @@ std::vector<int> Boids::DistanceTesting(int _id, std::vector<int> _neighbors, fl
 	return closeNeighbors;
 }
 
+bool Boids::CheckIfBetterType(int _atk, int _def)
+{
+	if (boidType[_atk] == Fire  && boidType[_def] == Water) return false;
+	if (boidType[_atk] == Water && boidType[_def] == Grass) return false;
+	if (boidType[_atk] == Grass && boidType[_def] == Fire ) return false;
+	if (boidType[_atk] == boidType[_def]) return false;
+	return true;
+}
+
 Vector2 Boids::GetDodgeDirection(int _id, std::vector<int> _neighbors)
 {
 	Vector2 direction = Vector2Zero();
@@ -174,4 +208,38 @@ Vector2 Boids::GetCohesionDirection(int _id, std::vector<int> _neighbors)
 	direction = Vector2Subtract(center, position[_id]);
 
 	return Vector2Normalize(direction);
+}
+
+Vector2 Boids::ChaseOtherBoids(int _id, std::vector<int> _neighbors)
+{
+	Vector2 direction = Vector2Zero();
+	int closestId = -1;
+	float closestDistance = FLT_MAX;
+	float currentDistCheckSqr = 0;
+
+	for (int i : _neighbors)
+	{
+		if (_id == i) continue;
+		if (!CheckIfBetterType(_id, i)) continue;
+
+		currentDistCheckSqr = Vector2DistanceSqr(position[_id], position[i]);
+		if (currentDistCheckSqr >= closestDistance) continue;
+		closestId = i;
+		closestDistance = currentDistCheckSqr;
+	}
+
+	if (closestId == -1) return direction;
+	direction = Vector2Subtract(position[closestId], position[_id]);
+	return Vector2Normalize(direction);
+}
+
+void Boids::KillOtherBoids(int _id, std::vector<int> _neighbors)
+{
+	_neighbors = DistanceTesting(_id, _neighbors, attackCollisionSize);
+	
+	for (int i : _neighbors)
+	{
+		if (!CheckIfBetterType(_id, i)) continue;
+		boidType[i] = boidType[_id];
+	}
 }
