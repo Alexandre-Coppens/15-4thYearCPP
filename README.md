@@ -3,16 +3,17 @@
 Boid Simulation.
 
 ##### What's Implemented:
--Moving Around
--Dodging Other Boids
--Aligning with other Boids
--Cohesion with other Boids
--FOV (dot product velocity - distance)
+- Moving Around
+- Dodging Other Boids
+- Aligning with other Boids
+- Cohesion with other Boids
+- FOV (dot product velocity - distance)
+- Rock, Paper, Scissors Boid Battle
 
 ##### Optimisations used:
--Fast Sqrt Distance check.
--Grid Checking (20 / 20)
--Sphere Check after grid check
+- Fast Sqrt Distance check.
+- Grid Checking (20 / 20)
+- Sphere Check after grid check
 
 ##### Benchmarks:
 *(In Debug mode) after waiting for ~20 secs of runtime*
