@@ -14,15 +14,15 @@ int main()
     //SetTargetFPS(60);
 
 	srand(time(NULL));
-    boidList.Start(1000);
+    boidList.Start(10000);
     while (!WindowShouldClose()){
         boidList.Update();
 
         BeginDrawing();
-        ClearBackground(Color{ 2, 5, 32 });
-        DrawRectangleGradientV(0, 0, static_cast<float>(WindowWidth), static_cast<float>(WindowHeight), Color{ 83, 237, 237, 255 }, Color{ 16, 104, 117, 255});
+        ClearBackground(RAYWHITE);
+        //DrawRectangleGradientV(0, 0, static_cast<float>(WindowWidth), static_cast<float>(WindowHeight), Color{ 83, 237, 237, 255 }, Color{ 16, 104, 117, 255});
         boidList.Draw();
-        DrawText(TextFormat("FPS: %i", GetFPS()), 10, 10, 20, DARKGRAY);
+        DrawFPS(10, 10);
         EndDrawing();
 	}
 

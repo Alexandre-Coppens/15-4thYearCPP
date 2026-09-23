@@ -4,15 +4,16 @@
 #include <iostream>
 #include <string>
 
-Boids::Boids():
+Boids::Boids() :
 	size(2.0f),
 	speed(50.0f),
 	dodgeCollisionSize(30.0f),
 	visionCollisionSize(100.0f),
-	dodgeImportance(0.8f),
-	alignImportance(0.8f),
-	cohesionImportance(0.5f),
-	gridSize(20)
+	visionCone(0.3f),
+	dodgeImportance(1.5f),
+	alignImportance(2.0f),
+	cohesionImportance(1.5f),
+	gridSize(50)
 {
 	//Please do not look at this
 	_gridIndices = std::vector< std::vector<std::vector<int>>>(gridSize, std::vector<std::vector<int>>(gridSize, std::vector<int>()));
@@ -38,7 +39,9 @@ void Boids::Update()
 	{
 		int posX = position[i].x / (WindowWidth / gridSize);
 		int posY = position[i].y / (WindowHeight / gridSize);
+
 		std::vector<int> neighbors = GridChecking(posX, posY);
+		neighbors = FOVTesting(i, neighbors);
 		neighbors = DistanceTesting(i, neighbors, visionCollisionSize);
 
 		Vector2 dodgeDirection = GetDodgeDirection(i, neighbors);
@@ -104,6 +107,19 @@ std::vector<int> Boids::CaseChecking(int _x, int _y)
 	if (_y >= _gridIndices[_x].size())	return std::vector<int>();
 
 	return _gridIndices[_x][_y];
+}
+
+std::vector<int> Boids::FOVTesting(int _id, std::vector<int> _neighbors)
+{
+	std::vector<int> frontNeighbors = std::vector<int>();
+	for (int i : _neighbors)
+	{
+		if (Vector2DotProduct(velocity[i], Vector2Subtract(position[_id], position[i])) >= visionCone)
+		{
+			frontNeighbors.push_back(i);
+		}
+	}
+	return frontNeighbors;
 }
 
 std::vector<int> Boids::DistanceTesting(int _id, std::vector<int> _neighbors, float _collisionSize)

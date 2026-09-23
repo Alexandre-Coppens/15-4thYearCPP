@@ -7,6 +7,7 @@ What's Implemented:
 -Dodging Other Boids
 -Aligning with other Boids
 -Cohesion with other Boids
+-FOV (dot product velocity - distance)
 
 
 Optimisations used:
@@ -23,3 +24,4 @@ Benchmarks:
 -Aligning		- 800 FPS	- 10 FPS	- 9s/Frame
 -Grid Checking		- 490 FPS	- 32 FPS	- 2 FPS
 -Cohesion & SphereCheck - 350 FPS	- 25 FPS	- 1 FPS
+-FOV			- 430 FPS	- 28 FPS	- 2 FPS

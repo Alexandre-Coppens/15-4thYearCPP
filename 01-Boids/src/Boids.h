@@ -12,6 +12,7 @@ private:
 
 	const float dodgeCollisionSize;
 	const float visionCollisionSize;
+	const float visionCone;
 
 	const float dodgeImportance;
 	const float alignImportance;
@@ -29,6 +30,7 @@ public:
 
 	std::vector<int> GridChecking(int _posX, int _posY);
 	std::vector<int> CaseChecking(int _x, int _y);
+	std::vector<int> FOVTesting(int _id, std::vector<int> _neighbors);
 	std::vector<int> DistanceTesting(int _id, std::vector<int> _neighbors, float _collisionSize);
 
 	Vector2 GetDodgeDirection(int _id, std::vector<int> _neighbors);
