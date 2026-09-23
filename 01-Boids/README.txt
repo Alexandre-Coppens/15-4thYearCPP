@@ -6,11 +6,13 @@ What's Implemented:
 -Moving Around
 -Dodging Other Boids
 -Aligning with other Boids
+-Cohesion with other Boids
 
 
 Optimisations used:
 -Fast Sqrt Distance check.
 -Grid Checking (20 / 20)
+-Sphere Check after grid check
 
 
 Benchmarks:

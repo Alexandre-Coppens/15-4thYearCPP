@@ -27,8 +27,6 @@ public:
 	void Update();
 	void Draw();
 
-	void CalculateGridPosition();
-
 	std::vector<int> GridChecking(int _posX, int _posY);
 	std::vector<int> CaseChecking(int _x, int _y);
 	std::vector<int> DistanceTesting(int _id, std::vector<int> _neighbors, float _collisionSize);
