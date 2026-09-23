@@ -8,7 +8,10 @@ Boids::Boids():
 	size(2.0f),
 	speed(50.0f),
 	dodgeCollisionSize(30.0f),
-	alignCollisionSize(100.0f),
+	visionCollisionSize(100.0f),
+	dodgeImportance(0.8f),
+	alignImportance(0.8f),
+	cohesionImportance(0.5f),
 	gridSize(20)
 {
 	//Please do not look at this
@@ -36,13 +39,16 @@ void Boids::Update()
 		int posX = position[i].x / (WindowWidth / gridSize);
 		int posY = position[i].y / (WindowHeight / gridSize);
 		std::vector<int> neighbors = GridChecking(posX, posY);
+		neighbors = DistanceTesting(i, neighbors, visionCollisionSize);
 
 		Vector2 dodgeDirection = GetDodgeDirection(i, neighbors);
 		Vector2 alignDirection = GetAlignDirection(i, neighbors);
+		Vector2 cohesionDirection = GetCohesionDirection(i, neighbors);
 
-		Vector2 addedDirections = Vector2Add(Vector2Scale(dodgeDirection, 0.8f * GetFrameTime()), Vector2Scale(alignDirection, 0.8f * GetFrameTime()));
-											 //Vector2Add(Vector2Scale(alignDirection, 0.8f * GetFrameTime()),
-														//Vector2Scale(alignDirection, 0.8f * GetFrameTime())));
+		Vector2 addedDirections = Vector2Add(Vector2Scale(dodgeDirection, dodgeImportance * GetFrameTime()),
+											 Vector2Add(Vector2Scale(alignDirection, alignImportance * GetFrameTime()),
+														Vector2Scale(cohesionDirection, cohesionImportance * GetFrameTime())));
+
 		velocity[i] = Vector2Add(velocity[i], addedDirections);
 		velocity[i] = Vector2Normalize(velocity[i]);
 
@@ -100,21 +106,27 @@ std::vector<int> Boids::CaseChecking(int _x, int _y)
 	return _gridIndices[_x][_y];
 }
 
-bool Boids::DistanceTesting(int _boidA, int _boidB, float _collisionSize)
+std::vector<int> Boids::DistanceTesting(int _id, std::vector<int> _neighbors, float _collisionSize)
 {
-	return Vector2DistanceSqr(position[_boidA], position[_boidB]) <= pow(_collisionSize, 2);
+	std::vector<int> closeNeighbors = std::vector<int>();
+	for (int i : _neighbors)
+	{
+		if (Vector2DistanceSqr(position[_id], position[i]) <= pow(_collisionSize, 2))
+		{
+			closeNeighbors.push_back(i);
+		}
+	}
+	return closeNeighbors;
 }
 
 Vector2 Boids::GetDodgeDirection(int _id, std::vector<int> _neighbors)
 {
 	Vector2 direction = Vector2Zero();
+	_neighbors = DistanceTesting(_id, _neighbors, dodgeCollisionSize);
 	for (int i : _neighbors)
 	{
 		if (_id == i) continue;
-		if (DistanceTesting(i, _id, dodgeCollisionSize))
-		{
-			direction = Vector2Add(direction, Vector2Scale(Vector2Subtract(position[i], position[_id]), -1.0f));
-		}
+		direction = Vector2Add(direction, Vector2Scale(Vector2Subtract(position[i], position[_id]), -1.0f));
 	}
 	return Vector2Normalize(direction);
 }
@@ -125,10 +137,25 @@ Vector2 Boids::GetAlignDirection(int _id, std::vector<int> _neighbors)
 	for (int i : _neighbors)
 	{
 		if (_id == i) continue;
-		if (DistanceTesting(i, _id, alignCollisionSize))
-		{
-			direction = Vector2Add(direction, velocity[i]);
-		}
+		direction = Vector2Add(direction, velocity[i]);
 	}
+	return Vector2Normalize(direction);
+}
+
+Vector2 Boids::GetCohesionDirection(int _id, std::vector<int> _neighbors)
+{
+	Vector2 direction = Vector2Zero();
+	Vector2 center = Vector2Zero();
+	int successTest = 0;
+	for (int i : _neighbors)
+	{
+		if (_id == i) continue;
+		center = Vector2Add(center, position[i]);
+		successTest++;
+	}
+	if(successTest == 0)return center;
+	center = Vector2Divide(center, Vector2{ static_cast<float>(successTest), static_cast<float>(successTest) });
+	direction = Vector2Subtract(center, position[_id]);
+
 	return Vector2Normalize(direction);
 }

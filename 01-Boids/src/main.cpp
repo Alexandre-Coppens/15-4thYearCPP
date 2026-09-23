@@ -14,7 +14,7 @@ int main()
     //SetTargetFPS(60);
 
 	srand(time(NULL));
-    boidList.Start(10000);
+    boidList.Start(100);
     while (!WindowShouldClose()){
         boidList.Update();
 
