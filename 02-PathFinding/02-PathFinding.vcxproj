@@ -20,8 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Config.h" />
+    <ClInclude Include="src\ImageLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ImageLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

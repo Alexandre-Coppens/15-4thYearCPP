@@ -1,4 +1,4 @@
 #pragma once
 
-static int WindowWidth = 800;
+static int WindowWidth = 600;
 static int WindowHeight = 600;
