@@ -83,7 +83,7 @@ void Boids::Draw()
 {
 	for (int i = 0; i < position.size(); i++)
 	{
-		DrawCircleV(position[i], attackCollisionSize, Color{102, 242, 198, 100});
+		//DrawCircleV(position[i], attackCollisionSize, Color{102, 242, 198, 100});
 		switch (boidType[i])
 		{
 		case Fire:
