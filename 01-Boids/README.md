@@ -2,7 +2,7 @@
 
 Boid Simulation.
 
-##### What's Implemented:
+#### What's Implemented:
 - Moving Around
 - Dodging Other Boids
 - Aligning with other Boids
@@ -10,12 +10,21 @@ Boid Simulation.
 - FOV (dot product velocity - distance)
 - Rock, Paper, Scissors Boid Battle
 
-##### Optimisations used:
+#### Optimisations used:
 - Fast Sqrt Distance check.
 - Grid Checking (20 / 20)
 - Sphere Check after grid check
 
-##### Benchmarks:
+#### Videos:
+
+![](https://github.com/Alexandre-Coppens/15-4thYearCPP/blob/01-Boids/01-Boids/readme/Boids_NoPredator.gif)
+*Boids in their natural environment*
+
+---
+![](https://github.com/Alexandre-Coppens/15-4thYearCPP/blob/01-Boids/01-Boids/readme/Boids_Predators.gif)
+*Boids fighting in a Rock-Paper-Scissors battle*
+
+#### Benchmarks:
 *(In Debug mode) after waiting for ~20 secs of runtime*
 
 | - New Implementation -  | =-= 100 Boids   =-= | =-= 1000 Boids  =-= | =-= 10000 Boids =-= |
