@@ -8,8 +8,6 @@ class ImageLoader
 private:
 	int mapSizeX;
 	int mapSizeY;
-	float pixelWidth;
-	float pixelHeight;
 	std::vector<std::vector<char>> mapData;
 
 	std::map<char, int> importantPoints;
@@ -17,6 +15,8 @@ private:
 public:
 	ImageLoader();
 	~ImageLoader();
+
+	std::vector<std::vector<char>> getMapData();
 
 	void LoadImage(Texture2D _texture);
 	void DrawImage();

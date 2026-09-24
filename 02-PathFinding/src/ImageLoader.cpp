@@ -9,6 +9,8 @@ ImageLoader::~ImageLoader()
 {
 }
 
+std::vector<std::vector<char>> ImageLoader::getMapData() { return mapData; }
+
 void ImageLoader::LoadImage(Texture2D _texture)
 {
 	Image image = LoadImageFromTexture(_texture);
