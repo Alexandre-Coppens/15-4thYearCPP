@@ -29,7 +29,7 @@ private:
 	const float cohesionImportance;
 	const float chaseImportance;
 
-	const int gridSize;
+	const uint8_t gridSize;
 
 public:
 	Boids();
@@ -39,8 +39,8 @@ public:
 	void Update();
 	void Draw();
 
-	std::vector<int> GridChecking(int _posX, int _posY);
-	std::vector<int> CaseChecking(int _x, int _y);
+	std::vector<int> GridChecking(uint8_t _posX, uint8_t _posY);
+	std::vector<int> CaseChecking(uint8_t _x, uint8_t _y);
 	std::vector<int> FOVTesting(int _id, std::vector<int> _neighbors);
 	std::vector<int> DistanceTesting(int _id, std::vector<int> _neighbors, float _collisionSize);
 

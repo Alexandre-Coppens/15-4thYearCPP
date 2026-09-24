@@ -3,6 +3,7 @@
 #include "Config.h"
 #include <iostream>
 #include <string>
+#include<immintrin.h>
 
 Boids::Boids() :
 	size(2.0f),
@@ -23,6 +24,32 @@ Boids::Boids() :
 
 Boids::~Boids()
 {
+	//reservation memoire
+	Vector2 data[8];
+	//calculs
+	data[0] = GetDodgeDirection(i, neighbors);
+	data[1] = GetAlignDirection(i, neighbors);
+	data[2] = GetCohesionDirection(i, neighbors);
+	data[3] = ChaseOtherBoids(i, neighbors);
+
+	//load data to m128
+	__m128 accumulator = _mm_load_ps((float*)(data));
+
+	__m128 direction = _mm_setzero_ps();
+	__m128 importances = _mm_set_ps(dodgeImportance, alignImportance, cohesionImportance, chaseImportance);
+	__m128 scaledAccumulators = _mm_mul_ps(accumulator, importances);
+
+	__m128 frame = _mm_set_ps1(GetFrameTime());
+	scaledAccumulators = _mm_mul_ps(scaledAccumulators, frame);
+
+	scaledAccumulators = _mm_shuffle_ps(scaledAccumulators, scaledAccumulators, _MM_SHUFFLE(0, 2, 1, 3));
+	scaledAccumulators = _mm_hadd_ps(scaledAccumulators, scaledAccumulators);
+	__m128 final = _mm_hadd_ps(scaledAccumulators, scaledAccumulators);
+
+	float x = _mm_cvtss_f32(_mm_shuffle_ps(final, final, _MM_SHUFFLE(0, 0, 0, 2)));
+	float y = _mm_cvtss_f32(final);
+
+	Vector2 final = Vector2{x, y }
 }
 
 void Boids::Start(int _spawnNumber)
@@ -107,7 +134,7 @@ void Boids::Draw()
 	}
 }
 
-std::vector<int> Boids::GridChecking(int _posX, int _posY)
+std::vector<int> Boids::GridChecking(uint8_t _posX, uint8_t _posY)
 {
 	std::vector<int> boidsInRange;
 	std::vector<int> addToList;
@@ -124,7 +151,7 @@ std::vector<int> Boids::GridChecking(int _posX, int _posY)
 	return boidsInRange;
 }
 
-std::vector<int> Boids::CaseChecking(int _x, int _y)
+std::vector<int> Boids::CaseChecking(uint8_t _x, uint8_t _y)
 {
 	if (_x < 0)	return std::vector<int>();
 	if (_y < 0)	return std::vector<int>();
