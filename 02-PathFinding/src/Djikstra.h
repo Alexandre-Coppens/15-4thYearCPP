@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
+
 class Djikstra
 {
 private:
@@ -11,6 +12,7 @@ private:
 	std::vector<Vector2> nextCaseToTest;
 	bool needToBeRebuild;
 	int currentValue;
+	int currentIterations;
 	Texture mTexture;
 	bool needRedraw;
 
@@ -18,10 +20,10 @@ private:
 	std::vector<Vector2> pathFind;
 
 public:
-	Djikstra();
+	Djikstra(std::vector<std::vector<char>> _newMap);
 	~Djikstra();
 
-	void Calculate(std::vector<std::vector<char>> _newMap);
+	void Calculate(std::vector<std::vector<char>> _newMap, int _iterations);
 	void RoadToEnd(Vector2 _start);
 
 	void Update();

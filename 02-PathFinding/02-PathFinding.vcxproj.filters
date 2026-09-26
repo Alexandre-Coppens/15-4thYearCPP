@@ -24,6 +24,9 @@
     <ClInclude Include="src\Djikstra.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Benchmark.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Djikstra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Benchmark.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

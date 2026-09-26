@@ -1,12 +1,16 @@
 #include "Djikstra.h"
 #include "Config.h"
+#include "Benchmark.h"
 #include <string>
 #include <iostream>
 
-Djikstra::Djikstra():
-needToBeRebuild(false)
+Djikstra::Djikstra(std::vector<std::vector<char>> _newMap) :
+	needToBeRebuild(false),
+	currentIterations(1)
 {
 	nextCaseToTest = std::vector<Vector2>();
+	mapData = _newMap;
+	needRedraw = true;
 }
 
 Djikstra::~Djikstra()
@@ -14,7 +18,7 @@ Djikstra::~Djikstra()
 	UnloadTexture(mTexture);
 }
 
-void Djikstra::Calculate(std::vector<std::vector<char>> _newMap)
+void Djikstra::Calculate(std::vector<std::vector<char>> _newMap, int _iterations)
 {
 	mapData = _newMap;
 	Vector2 start, end = Vector2{-1, -1};
@@ -30,6 +34,7 @@ void Djikstra::Calculate(std::vector<std::vector<char>> _newMap)
 
 	if (Vector2Equals(end, Vector2{ -1, -1 })) return;
 
+	currentIterations = std::max(_iterations, 1);
 	needToBeRebuild = true;
 	currentValue = 0;
 	pixelDrawn = 0;
@@ -41,13 +46,18 @@ void Djikstra::Calculate(std::vector<std::vector<char>> _newMap)
 
 void Djikstra::RoadToEnd(Vector2 _start)
 {
+	if (mapData.size() == 0) return;
+	if (mapData.size() <= _start.x || mapData[0].size() <= _start.y) return;
 	if (mapData[_start.x][_start.y] == '0') return;
 	if (mapData[_start.x][_start.y] == '1') return;
 	if (mapData[_start.x][_start.y] == 'e') return;
+	if (mapData[_start.x][_start.y] >= 65)  return;
+
+	Benchmark::StartClock("Dijkstra Pathfind");
 	pathFind.clear();
 	bool notFoundEnd = true;
 	char currentSign;
-	Vector2 currentLocation = _start;
+	Vector2 currentLocation = Vector2{ _start.x, _start.y };
 	while (notFoundEnd)
 	{
 		pathFind.push_back(currentLocation);
@@ -59,21 +69,25 @@ void Djikstra::RoadToEnd(Vector2 _start)
 		if (currentSign == '2') currentLocation.y -= 1;
 	}
 	needRedraw = true;
+	Benchmark::StopClock("Dijkstra Pathfind");
 }
 
 void Djikstra::Update()
 {
 	if (!needToBeRebuild) return;
-	currentValue++;
-	testingThisFrame = nextCaseToTest;
-	nextCaseToTest.clear();
-	std::cout << "TotalPixels: " + std::to_string(pixelDrawn) + " || To do this frame: " + std::to_string(testingThisFrame.size()) + "\n";
-	for (Vector2 pos : testingThisFrame)
+	for (int i = 0; i < currentIterations; i++)
 	{
-		VisitNextCase(pos.x, pos.y);
+		currentValue++;
+		testingThisFrame = nextCaseToTest;
+		nextCaseToTest.clear();
+		std::cout << "TotalPixels: " + std::to_string(pixelDrawn) + " || To do this frame: " + std::to_string(testingThisFrame.size()) + "\n";
+		for (Vector2 pos : testingThisFrame)
+		{
+			VisitNextCase(pos.x, pos.y);
+		}
+		testingThisFrame.clear();
+		std::cout << "testThisFrame: " + std::to_string(testingThisFrame.size()) + " || Next to Test: " + std::to_string(nextCaseToTest.size()) + "\n";
 	}
-	testingThisFrame.clear();
-	std::cout << "testThisFrame: " + std::to_string(testingThisFrame.size()) + " || Next to Test: " + std::to_string(nextCaseToTest.size()) + "\n";
 	if (nextCaseToTest.size() == 0)
 	{
 		needToBeRebuild = false;
@@ -85,21 +99,19 @@ void Djikstra::Draw()
 {
 	if (needRedraw)
 	{
+		Benchmark::StartClock("Dijkstra Redraw");
 		if (mapData.size() == 0) return;
-		Image image = GenImageColor(mapData.size(), mapData[0].size(), RAYWHITE);
+		Image image = GenImageColor(mapData.size(), mapData[0].size(), BLACK);
 		for (int x = 0; x < mapData.size(); x++)
 		{
 			for (int y = 0; y < mapData[x].size(); y++)
 			{
+				if (mapData[x][y] == '1') continue;
 				Color color;
 				switch (mapData[x][y])
 				{
 				case '0':
 					color = RAYWHITE;
-					continue;
-
-				case '1':
-					color = BLACK;
 					break;
 
 				case 's':
@@ -114,8 +126,24 @@ void Djikstra::Draw()
 					color = GRAY;
 					break;
 
-				default:
+				case '8':
 					color = GREEN;
+					break;
+
+				case '4':
+					color = GREEN;
+					break;
+
+				case '6':
+					color = GREEN;
+					break;
+
+				case '2':
+					color = GREEN;
+					break;
+
+				default:
+					color = GRAY;
 					break;
 				}
 				ImageDrawPixel(&image, x, y, color);
@@ -125,12 +153,13 @@ void Djikstra::Draw()
 		{
 			for (Vector2 p : pathFind)
 			{
-				ImageDrawPixel(&image, p.x, p.y, RED);
+				ImageDrawPixel(&image, (int)p.x, (int)p.y, RED);
 			}
 		}
 		mTexture = LoadTextureFromImage(image);
 		UnloadImage(image);
 		needRedraw = false;
+		Benchmark::StopClock("Dijkstra Redraw");
 	}
 
 	DrawTexturePro(mTexture, Rectangle{ 0, 0, static_cast<float>(mTexture.width), static_cast<float>(mTexture.height) }, Rectangle{ 0, 0, static_cast<float>(WindowWidth), static_cast<float>(WindowHeight) }, Vector2{ 0, 0 }, 0, WHITE);
