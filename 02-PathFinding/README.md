@@ -1,36 +1,25 @@
-### 01-BOIDS
+### 02-PathFinding
 
-Boid Simulation.
+Creation of a multiple agent pathfinding system.
 
 #### What's Implemented:
-- Moving Around
-- Dodging Other Boids
-- Aligning with other Boids
-- Cohesion with other Boids
-- FOV (dot product velocity - distance)
-- Rock, Paper, Scissors Boid Battle
+- Map Translation (Image -> char vector)
+- Dijkstra Pathfinding
+- 
 
 #### Optimisations used:
-- Fast Sqrt Distance check.
-- Grid Checking (20 / 20)
-- Sphere Check after grid check
+
 
 #### Videos:
 
-![](https://github.com/Alexandre-Coppens/15-4thYearCPP/blob/01-Boids/01-Boids/readme/Boids_NoPredator.gif)
-*Boids in their natural environment*
-
----
-![](https://github.com/Alexandre-Coppens/15-4thYearCPP/blob/01-Boids/01-Boids/readme/Boids_Predators.gif)
-*Boids fighting in a Rock-Paper-Scissors battle*
+###### *Todo*
 
 #### Benchmarks:
-*(In Debug mode) after waiting for ~20 secs of runtime*
+*In Debug Mode with a total of 10 executions*
+*Since I am working on multiple computers, each implementations will work on a "before" and "after" basis.*
+*(I'm still figuring a best way to do this*)
 
-| - New Implementation -  | =-= 100 Boids   =-= | =-= 1000 Boids  =-= | =-= 10000 Boids =-= |
-| ----------------------- | ------------------- | ------------------- | ------------------- |
-| -Dodging                | 1370 FPS            | 21 FPS              | 4s/Frame            |
-| -Aligning               | 800 FPS             | 10 FPS              | 9s/Frame            |
-| -Grid Checking          | 490 FPS             | 32 FPS              | 2 FPS               |
-| -Cohesion & SphereCheck | 350 FPS             | 25 FPS              | 1 FPS               |
-| -FOV                    | 430 FPS             | 28 FPS              | 2 FPS               |
+###### =-=-= Base Dijkstra Implementation *(no before after)*
+| =- Function -= | =-= Average     =-= | =-= Lowest  =-= | =-= Highest =-= |
+| -------------- | ------------------- | --------------- | --------------- |
+|        | 1370 FPS            | 21 FPS          | 4s/Frame        |
