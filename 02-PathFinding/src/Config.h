@@ -1,7 +1,15 @@
 #pragma once
+#include <string>
 
-static int WindowWidth = 600;
-static int WindowHeight = 600;
+class Config
+{
+public:
+	static std::string ApplicationName;
+	static std::string ApplicationVersion;
 
-static float pixelWidth = 1;
-static float pixelHeight = 1;
+	static int WindowWidth;
+	static int WindowHeight;
+
+	static float pixelWidth;
+	static float pixelHeight;
+};

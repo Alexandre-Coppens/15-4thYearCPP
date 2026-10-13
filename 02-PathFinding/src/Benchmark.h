@@ -19,6 +19,7 @@ class Benchmark
 {
 private:
 	static std::map<std::string, BenchmarkTest> benchmarkLists;
+	static std::vector<std::vector<BenchmarkTest>> oldBenchmarkLists;
 	static int64_t frequency;
 	static int64_t endClock;
 	static double average;
@@ -33,4 +34,6 @@ public:
 	static void StopClock(std::string _name);
 
 	static void PrintResults();
+	static void SaveResults(std::string _appName, std::string _version);
+	static void LoadFile(std::string _appName, std::string _version);
 };

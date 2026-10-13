@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Benchmark.h" />
+    <ClInclude Include="src\Boid.h" />
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\Djikstra.h" />
     <ClInclude Include="src\ImageLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Benchmark.cpp" />
+    <ClCompile Include="src\Boid.cpp" />
     <ClCompile Include="src\Djikstra.cpp" />
     <ClCompile Include="src\ImageLoader.cpp" />
     <ClCompile Include="src\main.cpp" />

@@ -21,8 +21,8 @@ void ImageLoader::LoadBackground(Texture2D _texture)
 
 	mapSizeX = image.width;
 	mapSizeY = image.height;
-	pixelWidth = static_cast<float>(mapSizeX) / WindowWidth;
-	pixelHeight = static_cast<float>(mapSizeY) / WindowHeight;
+	Config::pixelWidth = static_cast<float>(mapSizeX) / Config::WindowWidth;
+	Config::pixelHeight = static_cast<float>(mapSizeY) / Config::WindowHeight;
 	mapData = std::vector< std::vector<char>>(mapSizeX, std::vector<char>(mapSizeY, '0'));
 
 	Color pixel;
@@ -83,15 +83,15 @@ void ImageLoader::DrawImage()
 				break;
 			}
 
-			DrawRectangle((int)(x * pixelWidth), (int)(y * pixelHeight), (int)(pixelWidth * scale), (int)(pixelHeight * scale), color);
+			DrawRectangle((int)(x * Config::pixelWidth), (int)(y * Config::pixelHeight), (int)(Config::pixelWidth * scale), (int)(Config::pixelHeight * scale), color);
 		}
 	}
 }
 
 void ImageLoader::SetPointAt(char _char, int mouseX, int mouseY)
 {
-	int mouseXnormalised = (int)(static_cast<float>(mouseX) * pixelWidth);
-	int mouseYnormalised = (int)(static_cast<float>(mouseY) * pixelHeight);
+	int mouseXnormalised = (int)(static_cast<float>(mouseX) * Config::pixelWidth);
+	int mouseYnormalised = (int)(static_cast<float>(mouseY) * Config::pixelHeight);
 	int placement = (mouseXnormalised * mapSizeX) + mouseYnormalised;
 	if (importantPoints.find(_char) != importantPoints.end())
 	{
