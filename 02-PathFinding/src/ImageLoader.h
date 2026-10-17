@@ -27,4 +27,5 @@ public:
 	void GetBorderWalls();
 	void ExpandWalls(int _size);
 	void FloodFillAt(int value, int x, int y);
+	void ChangeBordersValue();
 };

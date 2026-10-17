@@ -23,6 +23,8 @@ public:
 	Djikstra(std::vector<std::vector<char>> _newMap);
 	~Djikstra();
 
+	std::vector<std::vector<char>>* getMapData();
+
 	void Calculate(std::vector<std::vector<char>> _newMap, int _iterations);
 	void RoadToEnd(Vector2 _start);
 

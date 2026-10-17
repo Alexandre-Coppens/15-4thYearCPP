@@ -3,6 +3,7 @@
 #include "Benchmark.h"
 #include <string>
 #include <iostream>
+#include "Boid.h"
 
 Djikstra::Djikstra(std::vector<std::vector<char>> _newMap) :
 	needToBeRebuild(false),
@@ -16,6 +17,11 @@ Djikstra::Djikstra(std::vector<std::vector<char>> _newMap) :
 Djikstra::~Djikstra()
 {
 	UnloadTexture(mTexture);
+}
+
+std::vector<std::vector<char>>* Djikstra::getMapData()
+{
+	return &mapData;
 }
 
 void Djikstra::Calculate(std::vector<std::vector<char>> _newMap, int _iterations)
@@ -46,6 +52,8 @@ void Djikstra::Calculate(std::vector<std::vector<char>> _newMap, int _iterations
 
 void Djikstra::RoadToEnd(Vector2 _start)
 {
+	_start.x *= Config::pixelWidth;
+	_start.y *= Config::pixelHeight;
 	if (mapData.size() == 0) return;
 	if (mapData.size() <= _start.x || mapData[0].size() <= _start.y) return;
 	if (mapData[_start.x][_start.y] == '0') return;
@@ -75,6 +83,7 @@ void Djikstra::RoadToEnd(Vector2 _start)
 void Djikstra::Update()
 {
 	if (!needToBeRebuild) return;
+	Benchmark::StartClock("Dijkstra Rebuild One Iteration");
 	for (int i = 0; i < currentIterations; i++)
 	{
 		currentValue++;
@@ -87,12 +96,16 @@ void Djikstra::Update()
 		}
 		testingThisFrame.clear();
 		std::cout << "testThisFrame: " + std::to_string(testingThisFrame.size()) + " || Next to Test: " + std::to_string(nextCaseToTest.size()) + "\n";
+		
+		if (nextCaseToTest.size() == 0)
+		{
+			needToBeRebuild = false;
+			break;
+		}
 	}
-	if (nextCaseToTest.size() == 0)
-	{
-		needToBeRebuild = false;
-	}
+
 	needRedraw = true;
+	Benchmark::StopClock("Dijkstra Rebuild One Iteration");
 }
 
 void Djikstra::Draw()
@@ -131,15 +144,15 @@ void Djikstra::Draw()
 					break;
 
 				case '4':
-					color = GREEN;
+					color = BLUE;
 					break;
 
 				case '6':
-					color = GREEN;
+					color = ORANGE;
 					break;
 
 				case '2':
-					color = GREEN;
+					color = RED;
 					break;
 
 				default:
@@ -162,7 +175,7 @@ void Djikstra::Draw()
 		Benchmark::StopClock("Dijkstra Redraw");
 	}
 
-	DrawTexturePro(mTexture, Rectangle{ 0, 0, static_cast<float>(mTexture.width), static_cast<float>(mTexture.height) }, Rectangle{ 0, 0, static_cast<float>(WindowWidth), static_cast<float>(WindowHeight) }, Vector2{ 0, 0 }, 0, WHITE);
+	DrawTexturePro(mTexture, Rectangle{ 0, 0, static_cast<float>(mTexture.width), static_cast<float>(mTexture.height) }, Rectangle{ 0, 0, static_cast<float>(Config::WindowWidth), static_cast<float>(Config::WindowHeight) }, Vector2{ 0, 0 }, 0, WHITE);
 }
 
 void Djikstra::VisitNextCase(int x, int y)
