@@ -30,7 +30,7 @@
     <ClInclude Include="src\Boid.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParentPathFinding.h">
+    <ClInclude Include="src\ParentPathFinding.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

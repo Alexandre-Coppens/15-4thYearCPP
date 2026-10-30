@@ -33,7 +33,8 @@ int main()
     mapMaker.LoadBackground(texture);
     mapMaker.SetBorderSize(10);
 
-    Djikstra djikstra = Djikstra(mapMaker.getMapData());
+    Djikstra djikstra = Djikstra();
+    djikstra.setMapData(mapMaker.getMapData());
 
 	srand(time(NULL));
     while (!WindowShouldClose()){
@@ -45,7 +46,7 @@ int main()
         if (IsMouseButtonPressed(1))
         {
             mapMaker.SetPointAt('e', GetMouseX(), GetMouseY());
-            djikstra.Calculate(mapMaker.getMapData(), 10);
+            djikstra.Calculate();
             boids.KillAllBoids();
             boids.setMapPointer(djikstra.getMapData());
         }

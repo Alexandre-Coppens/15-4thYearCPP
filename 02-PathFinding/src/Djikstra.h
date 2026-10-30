@@ -2,34 +2,33 @@
 #include <vector>
 #include "raylib.h"
 #include "raymath.h"
+#include "ParentPathFinding.h"
 
 
-class Djikstra
+class Djikstra : public ParentPathFinding
 {
 private:
-	std::vector<std::vector<char>> mapData;
 	std::vector<Vector2> testingThisFrame;
 	std::vector<Vector2> nextCaseToTest;
 	bool needToBeRebuild;
-	int currentValue;
-	int currentIterations;
-	Texture mTexture;
 	bool needRedraw;
+	Texture mTexture;
 
 	int pixelDrawn;
 	std::vector<Vector2> pathFind;
 
+private:
+	void VisitNextCase(int x, int y);
+
 public:
-	Djikstra(std::vector<std::vector<char>> _newMap);
+	Djikstra();
 	~Djikstra();
 
 	std::vector<std::vector<char>>* getMapData();
 
-	void Calculate(std::vector<std::vector<char>> _newMap, int _iterations);
-	void RoadToEnd(Vector2 _start);
+	void CalculatePathFinding() override;
+	std::vector<Vector2> GetRoadToEnd(Vector2 _start) override;
 
-	void Update();
-	void Draw();
-
-	void VisitNextCase(int x, int y);
+	void Update() override;
+	void Draw() override;
 };

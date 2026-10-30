@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\02_affectation\build\CMakeFiles\326fb4c6f2a4ec439c5537bc4adc5247\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{8311EDB8-E6FB-3B16-BA75-BC5DE8CB0E6D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
