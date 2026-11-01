@@ -1,0 +1,11 @@
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/CMakeFiles/ALL_BUILD.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/CMakeFiles/ZERO_CHECK.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/00_simd/CMakeFiles/tp2_00_simd.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/00_simd/CMakeFiles/ALL_BUILD.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/00_life/CMakeFiles/tp2_00_life.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/01_threads/CMakeFiles/tp2_01_threads.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/02_shared_queue/CMakeFiles/tp2_02_shared_queue.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/03_blocking_workers/CMakeFiles/tp2_03_blocking_workers.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/04_semaphore/CMakeFiles/tp2_04_semaphore.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/05_futures/CMakeFiles/tp2_05_futures.dir
+F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/06_shutdown/CMakeFiles/tp2_06_shutdown.dir

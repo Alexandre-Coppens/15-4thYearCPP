@@ -12,8 +12,8 @@ using std::string;
 std::string Config::ApplicationName    = "Pathfinding";
 std::string Config::ApplicationVersion = "0.2";
 
-int Config::WindowWidth = 600;
-int Config::WindowHeight = 600;
+int Config::WindowWidth = 800;
+int Config::WindowHeight = 800;
 
 float Config::pixelWidth = 1;
 float Config::pixelHeight = 1;
@@ -26,14 +26,15 @@ int main()
     Benchmark::Init();
     Benchmark::LoadFile(Config::ApplicationName, Config::ApplicationVersion);
 
+    Boid boids;
+
     Texture2D texture = LoadTexture("resources/Textures/Maps/CauldronMap.png");
     ImageLoader mapMaker;
     mapMaker.LoadBackground(texture);
     mapMaker.SetBorderSize(10);
 
-    Boid boids;
-
-    Djikstra djikstra = Djikstra(mapMaker.getMapData());
+    Djikstra djikstra = Djikstra();
+    djikstra.setMapData(mapMaker.getMapData());
 
 	srand(time(NULL));
     while (!WindowShouldClose()){
@@ -45,8 +46,9 @@ int main()
         if (IsMouseButtonPressed(1))
         {
             mapMaker.SetPointAt('e', GetMouseX(), GetMouseY());
-            djikstra.Calculate(mapMaker.getMapData(), 9999);
-            boids.ChangeTheMap(djikstra.GetMapData());
+            djikstra.Calculate();
+            boids.KillAllBoids();
+            boids.setMapPointer(djikstra.getMapData());
         }
 
         //Update

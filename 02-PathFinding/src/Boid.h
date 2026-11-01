@@ -17,13 +17,16 @@ private:
 	std::vector<std::vector<char>>* mapPointer;
 
 	bool IsFreeSpace(int _boidInstance, Vector2 _goalPosition);
+	float GetDistanceToRemove(float currentPositionToCheck, float _frameDistance);
 
 public:
 	Boid();
 	~Boid();
 
-	void ChangeTheMap(std::vector<std::vector<char>>* _mapPointer);
+	void setMapPointer(std::vector<std::vector<char>>* _newMap);
+
 	void AddNewBoid(Vector2 _position);
+	void KillAllBoids();
 
 	void Update();
 	void Draw();

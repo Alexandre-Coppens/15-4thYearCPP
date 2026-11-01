@@ -5,13 +5,11 @@
 #include <iostream>
 #include "Boid.h"
 
-Djikstra::Djikstra(std::vector<std::vector<char>> _newMap) :
-	needToBeRebuild(false),
-	currentIterations(1)
+Djikstra::Djikstra() :
+	needToBeRebuild(false)
 {
 	nextCaseToTest = std::vector<Vector2>();
-	mapData = _newMap;
-	needRedraw = true;
+	needRedraw = false;
 }
 
 Djikstra::~Djikstra()
@@ -19,11 +17,16 @@ Djikstra::~Djikstra()
 	UnloadTexture(mTexture);
 }
 
-void Djikstra::Calculate(std::vector<std::vector<char>> _newMap, int _iterations)
+std::vector<std::vector<char>>* Djikstra::getMapData()
 {
-	mapData = _newMap;
-	Vector2 start, end = Vector2{-1, -1};
+	return &mapData;
+}
 
+void Djikstra::CalculatePathFinding()
+{
+	if (mapData.empty()) return;
+
+	Vector2 start, end = Vector2{-1, -1};
 	for (int x = 0; x < mapData.size(); x++)
 	{
 		for (int y = 0; y < mapData[x].size(); y++)
@@ -35,17 +38,15 @@ void Djikstra::Calculate(std::vector<std::vector<char>> _newMap, int _iterations
 
 	if (Vector2Equals(end, Vector2{ -1, -1 })) return;
 
-	currentIterations = std::max(_iterations, 1);
 	needToBeRebuild = true;
-	currentValue = 0;
 	pixelDrawn = 0;
 	testingThisFrame.clear();
 	nextCaseToTest.clear();
-	nextCaseToTest.reserve(_newMap.size()* _newMap.size());
+	nextCaseToTest.reserve(mapData.size()* mapData.size());
 	VisitNextCase(end.x, end.y);
 }
 
-void Djikstra::RoadToEnd(Vector2 _start)
+std::vector<Vector2> Djikstra::GetRoadToEnd(Vector2 _start)
 {
 	_start.x *= Config::pixelWidth;
 	_start.y *= Config::pixelHeight;
@@ -77,11 +78,14 @@ void Djikstra::RoadToEnd(Vector2 _start)
 
 void Djikstra::Update()
 {
+	if (mapData.empty()) return;
 	if (!needToBeRebuild) return;
+
 	Benchmark::StartClock("Dijkstra Rebuild One Iteration");
-	for (int i = 0; i < currentIterations; i++)
+	int iteration = 0;
+	while(iteration == 0 && !nextCaseToTest.empty())
 	{
-		currentValue++;
+		iteration++;
 		testingThisFrame = nextCaseToTest;
 		nextCaseToTest.clear();
 		std::cout << "TotalPixels: " + std::to_string(pixelDrawn) + " || To do this frame: " + std::to_string(testingThisFrame.size()) + "\n";
@@ -94,11 +98,12 @@ void Djikstra::Update()
 		
 		if (nextCaseToTest.size() == 0)
 		{
-			needToBeRebuild = false;
+			
 			break;
 		}
 	}
 
+	needToBeRebuild = false;
 	needRedraw = true;
 	Benchmark::StopClock("Dijkstra Rebuild One Iteration");
 }
@@ -139,15 +144,15 @@ void Djikstra::Draw()
 					break;
 
 				case '4':
-					color = GREEN;
+					color = BLUE;
 					break;
 
 				case '6':
-					color = GREEN;
+					color = ORANGE;
 					break;
 
 				case '2':
-					color = GREEN;
+					color = RED;
 					break;
 
 				default:
@@ -200,9 +205,4 @@ void Djikstra::VisitNextCase(int x, int y)
 			nextCaseToTest.push_back(Vector2{ static_cast<float>(x), static_cast<float>(y - 1) });
 			mapData[x][y - 1] = '8';
 		}
-}
-
-std::vector<std::vector<char>>* Djikstra::GetMapData()
-{
-	return &mapData;
 }

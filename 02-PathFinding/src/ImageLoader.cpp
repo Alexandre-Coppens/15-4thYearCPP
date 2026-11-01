@@ -45,6 +45,7 @@ void ImageLoader::SetBorderSize(int _size)
 	Benchmark::StartClock("Add Border Walls");
 	GetBorderWalls();
 	ExpandWalls(_size);
+	ChangeBordersValue();
 	std::cout << "ENDED EXPANSION \n";
 	Benchmark::StopClock("Add Border Walls");
 }
@@ -108,9 +109,6 @@ void ImageLoader::GetBorderWalls()
 	{
 		for (int y = 0; y < mapSizeY; y++)
 		{
-			Color color;
-			float scale = 1.0f;
-
 			if (mapData[x][y] == '1')
 			{
 				if (x < mapData.size() - 1)
@@ -178,4 +176,21 @@ void ImageLoader::FloodFillAt(int value, int x, int y)
 			mapData[x][y - 1] = charValue - 1;
 			FloodFillAt(value - 1, x, y - 1);
 		}
+}
+
+void ImageLoader::ChangeBordersValue()
+{
+	for (int x = 0; x < mapSizeX; x++)
+	{
+		for (int y = 0; y < mapSizeY; y++)
+		{
+			Color color;
+			float scale = 1.0f;
+
+			if (mapData[x][y] >= 65)
+			{
+				mapData[x][y] = '.';
+			}
+		}
+	}
 }

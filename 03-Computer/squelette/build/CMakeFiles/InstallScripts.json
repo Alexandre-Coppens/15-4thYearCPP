@@ -1,0 +1,15 @@
+{
+	"InstallScripts" : 
+	[
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/cmake_install.cmake",
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/00_simd/cmake_install.cmake",
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/00_life/cmake_install.cmake",
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/01_threads/cmake_install.cmake",
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/02_shared_queue/cmake_install.cmake",
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/03_blocking_workers/cmake_install.cmake",
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/04_semaphore/cmake_install.cmake",
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/05_futures/cmake_install.cmake",
+		"F:/-1- Work Station-/Github/15-4thYearCPP/03-Computer/squelette/build/tp2/06_shutdown/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

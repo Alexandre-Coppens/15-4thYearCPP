@@ -24,6 +24,7 @@
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\Djikstra.h" />
     <ClInclude Include="src\ImageLoader.h" />
+    <ClInclude Include="src\ParentPathFinding.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Benchmark.cpp" />
