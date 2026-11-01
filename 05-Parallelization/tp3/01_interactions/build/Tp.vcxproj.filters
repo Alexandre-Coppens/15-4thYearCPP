@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\boids.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\boids.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\gl_utils.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\gl_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\main.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\boids.hpp">
+    <ClInclude Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\boids.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\gl_utils.hpp">
+    <ClInclude Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\src\gl_utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\CMakeLists.txt" />
+    <CustomBuild Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\01_interactions\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{17C3498D-C3F8-3B52-8871-E532EB7D12BF}</UniqueIdentifier>
+      <UniqueIdentifier>{97A1B6D0-B6C8-3427-B523-001A4F9A6783}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{7BC8F616-27F7-3DAB-9F5B-A647586C56D8}</UniqueIdentifier>
+      <UniqueIdentifier>{CA993D32-8F0E-38C7-977A-A31687842776}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

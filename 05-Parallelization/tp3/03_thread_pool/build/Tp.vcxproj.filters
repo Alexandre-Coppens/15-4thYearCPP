@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\boids.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\boids.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\gl_utils.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\gl_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\thread_pool.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\thread_pool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\main.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\boids.hpp">
+    <ClInclude Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\boids.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\gl_utils.hpp">
+    <ClInclude Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\gl_utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\thread_pool.hpp">
+    <ClInclude Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\src\thread_pool.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\CMakeLists.txt" />
+    <CustomBuild Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\03_thread_pool\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{5F015379-B194-382D-87A9-23102B48AD19}</UniqueIdentifier>
+      <UniqueIdentifier>{A44114C7-E3E1-3BB0-8E2C-304C87908C51}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{0C86DA7A-6B62-3A78-96A0-CB4F0B8E9F64}</UniqueIdentifier>
+      <UniqueIdentifier>{CD45C498-5A7E-3A7B-9FC0-ECBC5C3C4E44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

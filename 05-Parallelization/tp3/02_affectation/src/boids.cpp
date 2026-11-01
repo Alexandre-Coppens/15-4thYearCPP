@@ -163,7 +163,7 @@ void BoidSim::rebuild_grid() {
         
         const int prev = std::atomic_ref<int>(cell_counts_[c]).fetch_add(1, std::memory_order_relaxed);
         if (prev < cell_cap_) {
-          cell_ids_[static_cast<std::size_t>(c * cell_cap_ + prev)] = i;
+          cell_ids_[c * cell_cap_ + prev] = i;
         }
       }
     });

@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\boids.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\boids.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\gl_utils.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\gl_utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\main.cpp">
+    <ClCompile Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\boids.hpp">
+    <ClInclude Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\boids.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\gl_utils.hpp">
+    <ClInclude Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\src\gl_utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\CMakeLists.txt" />
+    <CustomBuild Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{C53FBBA2-8EBE-3F36-8935-B2C1FEBF03BB}</UniqueIdentifier>
+      <UniqueIdentifier>{59938EDC-AAAC-3802-94E0-BA35ABB9412B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{B2F7622C-7A9E-3E90-B3C4-8D5F16E2F196}</UniqueIdentifier>
+      <UniqueIdentifier>{09A1A337-0F0D-3191-9093-52C38BA117D3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

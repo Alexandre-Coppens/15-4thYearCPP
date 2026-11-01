@@ -1,4 +1,4 @@
-# Install script for directory: F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/01_interactions
+# Install script for directory: F:/Github/15-4thYearCPP/05-Parallelization/tp3/01_interactions
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,13 +34,13 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/01_interactions/build/src/cmake_install.cmake")
+  include("F:/Github/15-4thYearCPP/05-Parallelization/tp3/01_interactions/build/src/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/01_interactions/build/install_local_manifest.txt"
+  file(WRITE "F:/Github/15-4thYearCPP/05-Parallelization/tp3/01_interactions/build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -56,6 +56,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/01_interactions/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "F:/Github/15-4thYearCPP/05-Parallelization/tp3/01_interactions/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

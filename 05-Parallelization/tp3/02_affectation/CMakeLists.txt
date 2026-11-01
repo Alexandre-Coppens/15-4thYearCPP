@@ -11,7 +11,7 @@ add_subdirectory(src)
 add_library(glfw SHARED IMPORTED)
 add_library(glew SHARED IMPORTED)
 
-set(DEPENDENCIES_ROOT "F:/-1- Work Station-/Github/15-4thYearCPP/00-Dependencies" CACHE PATH "DEPENDENCIES Folder")
+set(DEPENDENCIES_ROOT "F:/Github/15-4thYearCPP/00-Dependencies" CACHE PATH "DEPENDENCIES Folder")
 
 add_library(glm INTERFACE)
 target_include_directories(glm INTERFACE
@@ -33,10 +33,10 @@ set_target_properties(glew PROPERTIES
 )
 
 target_link_libraries(Tp
-	PRIVATE glew 
-	PRIVATE glm
+	PRIVATE glew
 	PRIVATE glfw
 	PRIVATE opengl32
+	PRIVATE glm
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

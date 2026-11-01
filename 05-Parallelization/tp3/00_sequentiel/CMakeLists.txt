@@ -11,7 +11,7 @@ add_subdirectory(src)
 add_library(glfw SHARED IMPORTED)
 add_library(glew SHARED IMPORTED)
 
-set(DEPENDENCIES_ROOT "F:/-1- Work Station-/Github/15-4thYearCPP/00-Dependencies" CACHE PATH "DEPENDENCIES Folder")
+set(DEPENDENCIES_ROOT "F:/Github/15-4thYearCPP/00-Dependencies" CACHE PATH "DEPENDENCIES Folder")
 
 add_library(glm INTERFACE)
 target_include_directories(glm INTERFACE

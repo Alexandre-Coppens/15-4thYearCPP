@@ -1,8 +1,8 @@
-# Install script for directory: F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/00_sequentiel/src
+# Install script for directory: F:/Github/15-4thYearCPP/05-Parallelization/tp3/00_sequentiel/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/tp")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Tp")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -35,6 +35,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/00_sequentiel/build/src/install_local_manifest.txt"
+  file(WRITE "F:/Github/15-4thYearCPP/05-Parallelization/tp3/00_sequentiel/build/src/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

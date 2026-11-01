@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="F:\Github\15-4thYearCPP\03-Multithreading\squelette\build\CMakeFiles\485b5287f46bfbbc8c071a940f1ac0e1\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A91DBB7C-E387-3329-A680-2C859D3E527A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="F:\-1- Work Station-\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\build\CMakeFiles\2f928ed731be340be9599a3511dcf02d\generate.stamp.rule">
+    <CustomBuild Include="F:\Github\15-4thYearCPP\05-Parallelization\tp3\00_sequentiel\build\CMakeFiles\8a1d95409b5cc3245e5fd45a92d70675\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{35FCB8CD-C02F-3208-85A8-D05DFBDE6FDB}</UniqueIdentifier>
+      <UniqueIdentifier>{6DF3B31E-1D06-3FF2-B58F-06BD6176EB2C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

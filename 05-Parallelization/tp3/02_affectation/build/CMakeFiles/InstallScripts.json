@@ -1,8 +1,8 @@
 {
 	"InstallScripts" : 
 	[
-		"F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/cmake_install.cmake",
-		"F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/src/cmake_install.cmake"
+		"F:/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/cmake_install.cmake",
+		"F:/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/src/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

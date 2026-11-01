@@ -1,3 +1,3 @@
-F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/CMakeFiles/Tp.dir
-F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/CMakeFiles/ALL_BUILD.dir
-F:/-1- Work Station-/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/CMakeFiles/ZERO_CHECK.dir
+F:/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/CMakeFiles/Tp.dir
+F:/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/CMakeFiles/ALL_BUILD.dir
+F:/Github/15-4thYearCPP/05-Parallelization/tp3/02_affectation/build/CMakeFiles/ZERO_CHECK.dir
