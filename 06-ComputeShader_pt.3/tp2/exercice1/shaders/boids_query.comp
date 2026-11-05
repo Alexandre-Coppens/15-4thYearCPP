@@ -1,0 +1,78 @@
+#version 430 core
+layout(local_size_x = 256) in;
+struct Particle { vec4 posType; vec4 vel; };
+layout(std430, binding = 0) readonly buffer Current { Particle current[]; };
+layout(std430, binding = 1) writeonly buffer Next { Particle next[]; };
+layout(std430, binding = 4) readonly buffer Heads { int cellHead[]; };
+layout(std430, binding = 5) readonly buffer Links { int nextParticle[]; };
+
+uniform uint N;
+
+uint GetCellID(vec3 position, float size, int cells)
+{
+  uint ix = uint(position.x / size);
+  uint iy = uint(position.y / size);
+  uint iz = uint(position.z / size);
+  uint n  = uint(cells);
+  return ix + n * (iy + n * iz);
+}
+
+void main() {
+  uint id = gl_GlobalInvocationID.x;
+  if (id >= N) return;
+  
+  next[id] = current[id];
+  
+  vec4 otherSeparation = vec4(0);
+  vec4 otherAlignement = vec4(0);
+  vec4 otherCohesion = vec4(0);
+  int count = 0;
+  
+  uint cell = GetCellID(current[id].posType.xyz, 2, 32);
+
+  for(int i = -1; i <= 1; i++)
+  {
+    for(int j = -1; j <= 1; j++)
+    {
+      for(int k = -1; k <= 1; k++)
+      {
+        uint checkCell = cell + (i) + (j * 2) + (k * 2 * 2);
+        if(cellHead[checkCell] == -1) continue;
+        
+        uint followingCell = cellHead[checkCell];
+        vec3 distance = current[cellHead[checkCell]].posType.xyz - current[cellHead].posType.xyz;
+        float distanceSqrt = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
+
+        while(true)
+        {
+          count ++;
+          distance = current[followingCell].posType.xyz - current[id].posType.xyz;
+          distanceSqrt = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
+          otherSeparation += vec4((pow((2*3) / 2, 2) - distanceSqrt) * distance, 0);
+          otherCohesion += current[followingCell].posType;
+          followingCell = nextParticle[followingCell];
+          if(followingCell == -1) break;
+        }
+      }
+    }
+  }
+
+  if(count != 0)
+  {
+    otherCohesion /= count;
+    otherCohesion = normalize(otherCohesion - current[id].posType);
+    otherSeparation = normalize(otherSeparation);
+  }
+  next[id].vel = normalize(current[id].vel + otherCohesion * 2.f + otherSeparation * 1.f);
+}
+
+//ivec3 cellCoord(vec3 position) {
+//  ivec3 coord = ivec3(floor(position / cellSize));
+//  return clamp(coord, ivec3(0), ivec3(cellsPerAxis - 1));
+//}
+//int cellID(ivec3 coord) {
+//  return coord.x + cellsPerAxis * (coord.y + cellsPerAxis * coord.z);
+//}
+//ivec3 neighborCell = home + ivec3(dx, dy, dz);
+//
+//cellID(neighborCell)
