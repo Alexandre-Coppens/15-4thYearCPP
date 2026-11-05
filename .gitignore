@@ -429,3 +429,4 @@ FodyWeavers.xsd
 *.msp
 00-Dependencies/glew/doc
 00-Dependencies/glfw/docs
+06-ComputeShader_pt.3/vs2022
