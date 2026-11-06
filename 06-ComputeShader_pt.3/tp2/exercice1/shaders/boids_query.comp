@@ -8,13 +8,17 @@ layout(std430, binding = 5) readonly buffer Links { int nextParticle[]; };
 
 uniform uint N;
 
-uint GetCellID(vec3 position, float size, int cells)
+ivec3 GetCellFromPosition(vec3 position, float size, int cells)
 {
-  uint ix = uint(position.x / size);
-  uint iy = uint(position.y / size);
-  uint iz = uint(position.z / size);
-  uint n  = uint(cells);
-  return ix + n * (iy + n * iz);
+  int ix = clamp(int(position.x / size), 0, cells-1);
+  int iy = clamp(int(position.y / size), 0, cells-1);
+  int iz = clamp(int(position.z / size), 0, cells-1);
+  return ivec3(ix, iy, iz);
+}
+
+uint GetCellID(ivec3 position, int cells)
+{
+  return uint(position.x + cells * (position.y + cells * position.z));
 }
 
 void main() {
@@ -28,7 +32,8 @@ void main() {
   vec4 otherCohesion = vec4(0);
   int count = 0;
   
-  uint cell = GetCellID(current[id].posType.xyz, 2, 32);
+  ivec3 cellPos = GetCellFromPosition(current[id].posType.xyz, 2, 32);
+  uint cell = GetCellID(cellPos, 32);
 
   for(int i = -1; i <= 1; i++)
   {
@@ -36,20 +41,28 @@ void main() {
     {
       for(int k = -1; k <= 1; k++)
       {
-        uint checkCell = cell + (i) + (j * 2) + (k * 2 * 2);
+        ivec3 newCellPos = cellPos + ivec3(i,j,k);
+        if(cellPos.x < 0 || newCellPos.x >= 32) continue;
+        if(cellPos.y < 0 || newCellPos.y >= 32) continue;
+        if(cellPos.z < 0 || newCellPos.z >= 32) continue;
+        
+        uint checkCell = GetCellID(newCellPos, 32);
         if(cellHead[checkCell] == -1) continue;
         
         uint followingCell = cellHead[checkCell];
-        vec3 distance = current[cellHead[checkCell]].posType.xyz - current[cellHead].posType.xyz;
+        vec3 distance = current[cellHead[checkCell]].posType.xyz - current[cellHead[checkCell]].posType.xyz;
         float distanceSqrt = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
-
-        while(true)
+        
+        int n = 0;
+        while(true && n < N)
         {
           count ++;
+          n++;
           distance = current[followingCell].posType.xyz - current[id].posType.xyz;
           distanceSqrt = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
           otherSeparation += vec4((pow((2*3) / 2, 2) - distanceSqrt) * distance, 0);
           otherCohesion += current[followingCell].posType;
+          otherAlignement += current[followingCell].vel;
           followingCell = nextParticle[followingCell];
           if(followingCell == -1) break;
         }
@@ -59,11 +72,12 @@ void main() {
 
   if(count != 0)
   {
-    otherCohesion /= count;
-    otherCohesion = normalize(otherCohesion - current[id].posType);
-    otherSeparation = normalize(otherSeparation);
+    otherCohesion /= float(count);
+    if(dot(otherSeparation, otherSeparation) > 1e-12)otherCohesion = normalize(otherCohesion - current[id].posType) * 0.7f;
+    if(dot(otherSeparation, otherSeparation) > 1e-12) otherSeparation = normalize(otherSeparation) * 0.6f;
+    if(dot(otherAlignement, otherAlignement) > 1e-12) otherAlignement = normalize(otherAlignement) * 0.8f;
   }
-  next[id].vel = normalize(current[id].vel + otherCohesion * 2.f + otherSeparation * 1.f);
+  next[id].vel = normalize(current[id].vel + otherCohesion + otherSeparation + otherAlignement);
 }
 
 //ivec3 cellCoord(vec3 position) {

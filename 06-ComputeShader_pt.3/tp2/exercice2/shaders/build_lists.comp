@@ -4,5 +4,22 @@ struct Particle { vec4 posType; vec4 vel; };
 layout(std430, binding = 0) readonly buffer Current { Particle current[]; };
 layout(std430, binding = 4) buffer Heads { int cellHead[]; };
 layout(std430, binding = 5) buffer Links { int nextParticle[]; };
+
 uniform uint N;
-void main() {}
+
+uint GetCellID(vec3 position, float size, int cells){
+    int ix = clamp(int(position.x / size), 0, cells-1);
+    int iy = clamp(int(position.y / size), 0, cells-1);
+    int iz = clamp(int(position.z / size), 0, cells-1);
+    int n  = cells;
+    return uint(ix + n * (iy + n * iz));
+}
+
+void main() {
+    uint id = gl_GlobalInvocationID.x;
+    if(id >= N) return;
+    int cell = int(GetCellID(current[id].posType.xyz, 2, 32));
+
+    int temp = atomicExchange(cellHead[cell], int(id));
+    nextParticle[id] = temp;
+}

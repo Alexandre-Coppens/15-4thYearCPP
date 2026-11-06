@@ -29,3 +29,4 @@ int windowHeight();
 const glm::mat4& viewMatrix();
 const glm::mat4& projMatrix();
 void drawPoints(GLuint particleBuffer, GLsizei count);
+void drawGridImpl(const float bmin[3], const float bmax[3]);

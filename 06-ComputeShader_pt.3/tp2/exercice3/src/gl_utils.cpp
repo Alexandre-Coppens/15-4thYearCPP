@@ -13,7 +13,7 @@ int gHeight = 800;
 glm::mat4 gView(1.f);
 glm::mat4 gProj(1.f);
 GLuint gPoints = 0;
-const glm::vec3 gTarget(32.f, 32.f, 32.f);
+const glm::vec3 gTarget(0.f, 0.f, 0.f);
 float gYaw = 0.f;
 float gPitch = 0.f;
 float gDist = 88.f;
@@ -145,4 +145,31 @@ void drawPoints(GLuint particleBuffer, GLsizei count) {
   glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
   glDrawArrays(GL_POINTS, 0, count);
   glDeleteVertexArrays(1, &vao);
+}
+
+void drawGridImpl(const float bmin[3], const float bmax[3]) {
+  ensurePoints();
+  glUseProgram(0);
+  glBindVertexArray(0);
+  glMatrixMode(GL_PROJECTION);
+  glLoadMatrixf(&gProj[0][0]);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadMatrixf(&gView[0][0]);
+  glColor3f(0.35f, 0.45f, 0.55f);
+  const float x0 = bmin[0], y0 = bmin[1], z0 = bmin[2];
+  const float x1 = bmax[0], y1 = bmax[1], z1 = bmax[2];
+  glBegin(GL_LINES);
+  glVertex3f(x0, y0, z0); glVertex3f(x1, y0, z0);
+  glVertex3f(x0, y1, z0); glVertex3f(x1, y1, z0);
+  glVertex3f(x0, y0, z1); glVertex3f(x1, y0, z1);
+  glVertex3f(x0, y1, z1); glVertex3f(x1, y1, z1);
+  glVertex3f(x0, y0, z0); glVertex3f(x0, y1, z0);
+  glVertex3f(x1, y0, z0); glVertex3f(x1, y1, z0);
+  glVertex3f(x0, y0, z1); glVertex3f(x0, y1, z1);
+  glVertex3f(x1, y0, z1); glVertex3f(x1, y1, z1);
+  glVertex3f(x0, y0, z0); glVertex3f(x0, y0, z1);
+  glVertex3f(x1, y0, z0); glVertex3f(x1, y0, z1);
+  glVertex3f(x0, y1, z0); glVertex3f(x0, y1, z1);
+  glVertex3f(x1, y1, z0); glVertex3f(x1, y1, z1);
+  glEnd();
 }
