@@ -3,7 +3,7 @@ layout(local_size_x = 256) in;
 struct Particle { vec4 posType; vec4 vel; };
 layout(std430, binding = 0) readonly buffer Current { Particle current[]; };
 layout(std430, binding = 1) writeonly buffer Next { Particle next[]; };
-layout(std430, binding = 6) readonly buffer Box { float boxSize[]; };
+layout(std430, binding = 6) buffer Box { int boxSize[]; };
 
 uniform uint N;
 
@@ -11,17 +11,18 @@ void main() {
   uint id = gl_GlobalInvocationID.x;
   if (id >= N) return;
   
-  next[id].posType.xyz = current[id].posType.xyz + current[id].vel.xyz;
-  if(current[id].posType.x < -boxSize[0] || current[id].posType.x > boxSize[3]){
-    next[id].vel.x = current[id].vel.x * -1;
-    next[id].posType.x = max(-boxSize[0], min(current[id].posType.x, boxSize[3]));
+  vec3 nextPos = current[id].posType.xyz + current[id].vel.xyz;
+  next[id].posType.xyz = nextPos;
+  if(current[id].posType.x < boxSize[0] || current[id].posType.x > boxSize[3]){
+    atomicMin(boxSize[0], int(floor(nextPos.x)));
+    atomicMax(boxSize[3], int(ceil(nextPos.x)));
   }
-  if(current[id].posType.y < -boxSize[1] || current[id].posType.y > boxSize[4]) {
-    next[id].vel.y = current[id].vel.y * -1;
-    next[id].posType.y = max(-boxSize[1], min(current[id].posType.y, boxSize[4]));
+  if(current[id].posType.y < boxSize[1] || current[id].posType.y > boxSize[4]) {
+    atomicMin(boxSize[1], int(floor(nextPos.y)));
+    atomicMax(boxSize[4], int(ceil(nextPos.y)));
   }
-  if(current[id].posType.z < -boxSize[2] || current[id].posType.z > boxSize[5]){
-    next[id].vel.z = current[id].vel.z * -1;
-    next[id].posType.z = max(-boxSize[2], min(current[id].posType.z, boxSize[5]));
+  if(current[id].posType.z < boxSize[2] || current[id].posType.z > boxSize[5]){
+    atomicMin(boxSize[2], int(floor(nextPos.z)));
+    atomicMax(boxSize[5], int(ceil(nextPos.z)));
   }
 }

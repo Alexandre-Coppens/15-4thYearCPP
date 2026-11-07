@@ -15,7 +15,7 @@ void CalculateDeltaTime()
 int main() {
   if (!initWindow(800, 800, "TP2 exercice 2")) return 1;
   
-  const int N = 9999;
+  const int N = 65536;
   const int cells = 32 * 32 * 32;
   
   std::vector<Particle> state;
@@ -24,7 +24,7 @@ int main() {
   GLuint next = makeSSBO(1, static_cast<GLsizeiptr>(state.size() * sizeof(Particle)), 0);
   GLuint heads = makeSSBO(4, static_cast<GLsizeiptr>(cells * sizeof(int)), 0);
   GLuint links = makeSSBO(5, static_cast<GLsizeiptr>(N * sizeof(int)), 0);
-  GLuint box = makeSSBO(6, static_cast<GLsizeiptr>(6 * sizeof(float)), boxPtr());
+  GLuint box = makeSSBO(6, static_cast<GLsizeiptr>(6 * sizeof(int)), boxPtr()->data());
   
   GLuint build = loadComputeProgram("build_lists.comp");
   GLuint query = loadComputeProgram("query.comp");
@@ -40,7 +40,7 @@ int main() {
     
     glUseProgram(query);
     glUniform1ui(glGetUniformLocation(query, "N"), static_cast<GLuint>(N));
-    glUniform1f(glGetUniformLocation(query, "attractionRadius"), 10.f);
+    glUniform1f(glGetUniformLocation(query, "attractionRadius"), 100.f);
     glUniform1f(glGetUniformLocation(query, "deltaTime"), dt);
     glDispatchCompute(ceilDiv(static_cast<GLuint>(N), 256), 1, 1);
     glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
@@ -52,9 +52,10 @@ int main() {
     glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
     
     drawPoints(next, N);
-    const float bMin[3]{boxSize()[0], boxSize()[1], boxSize()[2]};
-    const float bMax[3]{boxSize()[3], boxSize()[4], boxSize()[5]};
+    const float bMin[3]{static_cast<float>(boxSize()[0]), static_cast<float>(boxSize()[1]), static_cast<float>(boxSize()[2])};
+    const float bMax[3]{static_cast<float>(boxSize()[3]), static_cast<float>(boxSize()[4]), static_cast<float>(boxSize()[5])};
     drawGridImpl(bMin, bMax);
+    
     GLuint tmp = current;
     current = next;
     next = tmp;

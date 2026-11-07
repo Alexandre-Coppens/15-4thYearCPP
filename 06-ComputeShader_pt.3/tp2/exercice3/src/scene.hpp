@@ -4,7 +4,8 @@ struct Particle {
   alignas(16) float posType[4];
   alignas(16) float vel[4];
 };
-std::vector<float> boxSize();
-float* boxPtr();
+
+std::vector<int> boxSize();
+std::vector<int>* boxPtr();
 void initParticles(std::vector<Particle>& dst, int n);
 void initBoids(std::vector<Particle>& dst, int n, float L);

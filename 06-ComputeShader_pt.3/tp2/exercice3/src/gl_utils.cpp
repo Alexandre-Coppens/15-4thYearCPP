@@ -172,4 +172,6 @@ void drawGridImpl(const float bmin[3], const float bmax[3]) {
   glVertex3f(x0, y1, z0); glVertex3f(x0, y1, z1);
   glVertex3f(x1, y1, z0); glVertex3f(x1, y1, z1);
   glEnd();
+  GLenum e = glGetError();
+  printf("GL error: 0x%x\n", e);
 }

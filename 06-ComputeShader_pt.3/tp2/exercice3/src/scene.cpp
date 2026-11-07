@@ -1,11 +1,12 @@
 #include "scene.hpp"
 #include <cstdlib>
 namespace {
-std::vector<float> kBox = {-32.f,-32.f,-32.f,32.f,32.f,32.f};
+std::vector<int> kBox = {-32,-32,-32,32,32,32};
 float rnd() { return static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX); }
 }
-std::vector<float> boxSize(){  return kBox;}
-float* boxPtr(){  return kBox.data();}
+
+std::vector<int> boxSize(){  return kBox;}
+std::vector<int>* boxPtr(){  return &kBox;}
 void initParticles(std::vector<Particle>& dst, int n) {
   dst.resize(static_cast<size_t>(n));
   for (int i = 0; i < n; ++i) {
