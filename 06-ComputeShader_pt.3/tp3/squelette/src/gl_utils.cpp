@@ -732,7 +732,20 @@ GLuint GetNumberOfLights(std::vector<GLuint> lights)
   return valid;
 }
 
-glm::vec3 DividedClusterNumber(std::vector<glm::vec3> clusterSize)
+glm::vec3 DividedClusterNumber(glm::vec2 clusterSize, int clusterZNumber)
 {
   glm::vec3 ret = glm::vec3(0);
+  ret.x = floor(windowWidth() / clusterSize.x);
+  ret.y = floor(windowHeight() / clusterSize.y);
+  ret.z = std::max(1, clusterZNumber);
+}
+
+float getNearFrustrumDistance()
+{
+  return kNear;
+}
+
+float getFarFrustrumDistance()
+{
+  return kFar;
 }

@@ -18,11 +18,15 @@ inline void initGLLoader() {}
 
 #include <cstdint>
 
+float getNearFrustrumDistance();
+float getFarFrustrumDistance();
+
 glm::vec3 getCameraPosition();
 glm::vec3 getCameraForward();
 glm::vec3 getCameraRight();
 std::vector<glm::vec4> GetCameraPlanes();
 GLuint GetNumberOfLights(std::vector<GLuint> lights);
+glm::vec3 DividedClusterNumber(glm::vec2 clusterSize, int clusterZNumber);
 
 GLuint makeSSBO(GLuint binding, GLsizeiptr bytes, const void* data = 0);
 void updateSSBO(GLuint buffer, GLsizeiptr bytes, const void* data = 0);

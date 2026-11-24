@@ -1,0 +1,20 @@
+﻿#version 430 core
+layout(local_size_x = 256) in;
+struct AABB {vec4 min; vec4 max;};
+layout(std430, binding = 3) writeonly buffer Clusters { AABB cluster[]; };
+
+uniform uint n;
+
+bool IsLightInView(uint _id, uint _normal)
+{
+    vec3 lightPos = vec3(lights[_id].positionRadius[0], lights[_id].positionRadius[1], lights[_id].positionRadius[2]);
+    return (dot(planes[_normal].xyz, lightPos) + planes[_normal].w >= -lights[_id].positionRadius[3]);
+}
+
+void main() {
+    uint id = gl_GlobalInvocationID.x;
+    if(id >= n) return;
+
+    AABB current;
+    cluster[id] = current;
+}
