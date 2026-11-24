@@ -92,6 +92,7 @@ GLuint makeSSBO(GLuint binding, GLsizeiptr bytes, const void* data) {
   glBindBufferBase(GL_SHADER_STORAGE_BUFFER, binding, buffer);
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0); return buffer;
 }
+
 void readSSBO(GLuint buffer, GLsizeiptr bytes, void* dst) {
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, buffer);
   glGetBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, bytes, dst);

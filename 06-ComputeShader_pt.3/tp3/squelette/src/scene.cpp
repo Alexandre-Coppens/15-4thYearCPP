@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <cstdlib>
+#include <GL/glew.h>
 
 namespace {
 const float kBox = 64.f;

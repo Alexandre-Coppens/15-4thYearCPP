@@ -15,12 +15,14 @@ end
 local vendor = vendorRoot()
 local glewDll = vendor .. "/glew/bin/Release/x64/glew32.dll"
 local glfwDll = vendor .. "/glfw/lib-vc2022/glfw3.dll"
+local assimpDll = vendor .. "/assimp/bin/assimp-vc143-mtd.dll"
+local lzmaDll = vendor .. "/lzma/lib/lzma.dll"
 
 workspace "tps"
   architecture "x64"
   configurations { "Debug", "Release" }
   location "vs2022"
-  cppdialect "C++11"
+  cppdialect "C++17"
   multiprocessorcompile "On"
 
   filter "configurations:Debug"
@@ -45,14 +47,32 @@ local function cppProject(name, dir)
     debugdir(dir)
 end
 
-local function withGl(dir, useGlfw, useGlm)
-  includedirs { vendor .. "/glew/include" }
-  libdirs { vendor .. "/glew/lib/Release/x64" }
-  links { "glew32", "opengl32" }
+local function withGl(dir, useGlfw, useGlm, useAssimp)
+  includedirs { 
+    vendor .. "/glew/include",
+    vendor .. "/zlib",
+    vendor .. "/lzma/include",
+    vendor .. "/jpegturbo/include"
+  }
+  libdirs { 
+    vendor .. "/glew/lib/Release/x64",
+    vendor .. "/zlib",
+    vendor .. "/lzma/lib",
+    vendor .. "/jpegturbo/lib"
+  }
+  links { 
+    "glew32", "opengl32",
+    "zlib", "lzma", "jpeg-static", "turbojpeg-static"
+  }
   if useGlfw then
     includedirs { vendor .. "/glfw/include" }
     libdirs { vendor .. "/glfw/lib-vc2022" }
     links { "glfw3dll" }
+  end
+  if useAssimp then
+    includedirs { vendor .. "/assimp/include" }
+    libdirs { vendor .. "/assimp/lib" }
+    links { "assimp-vc143-mtd" }
   end
   if useGlm then
     includedirs { vendor .. "/glm" }
@@ -62,6 +82,8 @@ local function withGl(dir, useGlfw, useGlm)
   }
   filter "system:windows"
     local cmds = { '{COPYFILE} "' .. glewDll .. '" "%{cfg.targetdir}"' }
+    table.insert(cmds, '{COPYFILE} "' .. assimpDll .. '" "%{cfg.targetdir}"')
+    table.insert(cmds, '{COPYFILE} "' .. lzmaDll .. '" "%{cfg.targetdir}"')
     if useGlfw then
       table.insert(cmds, '{COPYFILE} "' .. glfwDll .. '" "%{cfg.targetdir}"')
     end
@@ -69,18 +91,15 @@ local function withGl(dir, useGlfw, useGlm)
   filter {}
 end
 
-local function add(name, dir, useGlfw, useGlm)
+local function add(name, dir, useGlfw, useGlm, useAssimp)
   if not os.isdir(dir) then
     return
   end
   cppProject(name, dir)
-  withGl(dir, useGlfw, useGlm)
+  withGl(dir, useGlfw, useGlm, useAssimp)
 end
 
-add("tp1_exercice1", "tp1/exercice1", false, false)
-add("tp1_exercice2", "tp1/exercice2", true, false)
-add("tp1_exercice3", "tp1/exercice3", false, false)
-add("tp2_exercice1", "tp2/exercice1", true, true)
-add("tp2_exercice2", "tp2/exercice2", true, true)
-add("tp2_exercice3", "tp2/exercice3", true, true)
-add("tp3_squelette", "tp3/squelette", true, true)
+add("tp2_exercice1", "tp2/exercice1", true, true, false)
+add("tp2_exercice2", "tp2/exercice2", true, true, false)
+add("tp2_exercice3", "tp2/exercice3", true, true, false)
+add("tp3_squelette", "tp3/squelette", true, true, true)

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="cups">
+      <UniqueIdentifier>{A059957C-8C90-960D-357D-7C102193120F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cups\state">
+      <UniqueIdentifier>{10D1DE69-FC88-20B7-6590-F9125167BBA7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{AF02550B-1BE2-D3A6-24FA-5E7D90583A08}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\cups\Printer.cpp">
+      <Filter>cups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cups\Spooler.cpp">
+      <Filter>cups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cups\User.cpp">
+      <Filter>cups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cups\state\IsPrintingState.cpp">
+      <Filter>cups\state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cups\state\OffState.cpp">
+      <Filter>cups\state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cups\state\OnState.cpp">
+      <Filter>cups\state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cups\state\SuspendState.cpp">
+      <Filter>cups\state</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\network\address.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\network\file_descriptor.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\network\poller.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\network\socket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\network\timestamp.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

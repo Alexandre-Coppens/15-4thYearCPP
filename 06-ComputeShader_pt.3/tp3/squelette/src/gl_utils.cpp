@@ -53,7 +53,7 @@ struct MapPart {
   int textured;
 };
 std::vector<MapPart> gParts;
-
+  
 std::string readFile(const std::string& path) {
   std::ifstream in(path.c_str());
   if (!in) {
@@ -78,7 +78,7 @@ GLuint compile(GLenum type, const std::string& src, const std::string& name) {
   }
   return shader;
 }
-
+  
 GLuint linkProgram(GLuint a, GLuint b) {
   GLuint program = glCreateProgram();
   glAttachShader(program, a);
@@ -429,7 +429,7 @@ void onMouseButton(GLFWwindow*, int button, int action, int) {
 
 void updateCamera() {
   const float now = static_cast<float>(glfwGetTime());
-  static float prev = now;
+  static float prev = now; //??????
   float dt = now - prev;
   prev = now;
   if (dt < 0.f || dt > 0.1f) {
@@ -502,6 +502,12 @@ GLuint makeSSBO(GLuint binding, GLsizeiptr bytes, const void* data) {
   glBindBufferBase(GL_SHADER_STORAGE_BUFFER, binding, buffer);
   glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
   return buffer;
+}
+
+void updateSSBO(GLuint buffer, GLsizeiptr bytes, const void* data) {
+  glBindBuffer(GL_SHADER_STORAGE_BUFFER, buffer);
+  glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, bytes, data);
+  glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
 void readSSBO(GLuint buffer, GLsizeiptr bytes, void* dst) {
@@ -594,7 +600,7 @@ void renderGBuffer() {
   glBindFramebuffer(GL_FRAMEBUFFER, gFbo);
   glViewport(0, 0, gWidth, gHeight);
   glEnable(GL_DEPTH_TEST);
-  glClearColor(0.f, 0.f, 0.f, 1.f);
+  glClearColor(0.07f, 0.f, 0.f, 1.f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glUseProgram(gGbufferProg);
   glUniformMatrix4fv(glGetUniformLocation(gGbufferProg, "uView"), 1, GL_FALSE, &gView[0][0]);
@@ -657,4 +663,76 @@ float positiveDepthFromWindowZ(float windowZ) {
   const float zndc = windowZ * 2.f - 1.f;
   const float zview = (2.f * kNear * kFar) / (kFar + kNear - zndc * (kFar - kNear));
   return -zview;
+}
+glm::vec3 getCameraForward()
+{
+  float x = cos(gPitch) * sin(gYaw);
+  float y = sin(gPitch);
+  float z = cos(gPitch) * cos(gYaw);
+  return {x, y, z};
+}
+  
+glm::vec3 getCameraRight()
+{
+  float x = cos(gYaw);
+  float y = 0;
+  float z = -sin(gYaw);
+  return {x, y, z};
+}
+  
+glm::vec4 PlaneNormal(glm::vec3 p0, glm::vec3 p1, glm::vec3 p2)
+{
+  glm::vec3 normal = glm::normalize(glm::cross(p1 - p0, p2 - p0));
+  float D = glm::dot(- normal, p0);
+  return glm::vec4(normal, D);
+}
+  
+std::vector<glm::vec4> GetCameraPlanes()
+{
+  std::vector<glm::vec4> planes;
+  glm::vec3 camPos = gEye;
+  glm::vec3 forward = getCameraForward();
+  glm::vec3 right = getCameraRight();
+  glm::vec3 up = cross(forward, right);
+  
+  glm::vec3 nc = camPos + forward * kNear;
+  glm::vec3 fc = camPos + forward * kFar;
+  float aspect = float(gWidth) / float(gHeight);
+  float nearW = 2 * tan(glm::radians(70.f / 2)) * kNear;
+  float farW  = 2 * tan(glm::radians(70.f / 2)) * kFar;
+  float nearH = nearW * aspect;
+  float farH  = farW * aspect;
+  
+  glm::vec3 ntr = nc + up * (nearH / 2) + right * (nearW / 2);
+  glm::vec3 nbr = nc - up * (nearH / 2) + right * (nearW / 2);
+  glm::vec3 ntl = nc + up * (nearH / 2) - right * (nearW / 2);
+  glm::vec3 nbl = nc - up * (nearH / 2) - right * (nearW / 2);
+  glm::vec3 ftr = fc + up * (farH / 2)  + right * (farW / 2);
+  glm::vec3 fbr = fc - up * (farH / 2)  + right * (farW / 2);
+  glm::vec3 ftl = fc + up * (farH / 2)  - right * (farW / 2);
+  glm::vec3 fbl = fc - up * (farH / 2)  - right * (farW / 2);
+  
+  planes.push_back({PlaneNormal(nbl,ntr, ntl)});
+  planes.push_back({PlaneNormal(ntr,ftl, ntl)});
+  planes.push_back({PlaneNormal(nbr,ftr, ntr)});
+  planes.push_back({PlaneNormal(nbr,nbl, fbr)});
+  planes.push_back({PlaneNormal(ftl,fbl, ntl)});
+  planes.push_back({PlaneNormal(fbr,ftl, ftr)});
+  
+  return planes;
+}
+  
+GLuint GetNumberOfLights(std::vector<GLuint> lights)
+{
+  GLuint valid = 0;
+  for (GLuint l : lights)
+  {
+    if (l != 0) valid ++;
+  }
+  return valid;
+}
+
+glm::vec3 DividedClusterNumber(std::vector<glm::vec3> clusterSize)
+{
+  glm::vec3 ret = glm::vec3(0);
 }

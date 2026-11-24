@@ -18,7 +18,14 @@ inline void initGLLoader() {}
 
 #include <cstdint>
 
+glm::vec3 getCameraPosition();
+glm::vec3 getCameraForward();
+glm::vec3 getCameraRight();
+std::vector<glm::vec4> GetCameraPlanes();
+GLuint GetNumberOfLights(std::vector<GLuint> lights);
+
 GLuint makeSSBO(GLuint binding, GLsizeiptr bytes, const void* data = 0);
+void updateSSBO(GLuint buffer, GLsizeiptr bytes, const void* data = 0);
 void readSSBO(GLuint buffer, GLsizeiptr bytes, void* dst);
 void clearSSBO(GLuint buffer, uint32_t value);
 GLuint ceilDiv(GLuint n, GLuint d);
